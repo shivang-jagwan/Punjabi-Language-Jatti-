@@ -1,198 +1,53 @@
-# 🚀 Jatti Language
+# Jatti Language
 
-**A Modern Programming Language Inspired by Punjabi**
+Jatti is a Punjabi-inspired programming language (interpreter + CLI) with a simple 2‑pane web playground and a VS Code extension.
 
-```
-     ██  █████  ████████ ████████ ██   ██ 
-     ██ ██   ██    ██       ██    ██   ██
-     ██ ███████    ██       ██    ██   ██
-██   ██ ██   ██    ██       ██    ██  
- █████  ██   ██    ██       ██    ██   ██
-```
+## Important docs
 
-**Version:** 0.4.0  
-**Status:** Production Ready ✅  
-**License:** MIT  
-**Author:** Mr. AngadSingh
+- Local setup (Windows): [LOCAL_SETUP.md](./LOCAL_SETUP.md)
+- Language basics (variables/operators/loops): [LANGUAGE_BASICS.md](./LANGUAGE_BASICS.md)
+- Deployment (Docker/Vercel/Render): [DEPLOYMENT.md](./DEPLOYMENT.md)
 
----
+Reference docs:
 
-## 📋 Table of Contents
+- Beginner tutorial: [BEGINNER_TUTORIAL.md](./BEGINNER_TUTORIAL.md)
+- Intermediate guide: [INTERMEDIATE_GUIDE.md](./INTERMEDIATE_GUIDE.md)
+- Language specification: [LANGUAGE_SPECIFICATION.md](./LANGUAGE_SPECIFICATION.md)
 
-1. [About Jatti](#about-jatti)
-2. [Features](#features)
-3. [Quick Start](#quick-start)
-4. [Syntax Reference](#syntax-reference)
-5. [Data Types](#data-types)
-6. [Keywords](#keywords)
-7. [Operations](#operations)
-8. [Control Flow](#control-flow)
-9. [Functions](#functions)
-10. [Collections](#collections)
-11. [Built-in Functions](#built-in-functions)
-12. [Examples](#examples)
-13. [Installation](#installation)
-14. [VS Code Extension](#vs-code-extension)
-15. [Documentation](#documentation)
-16. [Web Playground](#web-playground)
-17. [Deploy (Vercel)](#deploy-vercel)
-18. [Deploy (Render)](#deploy-render)
+## Quick start
 
----
+Create `hello.jatti`:
 
-## 🎯 About Jatti
-
-Jatti is a **modern, interpreted programming language** that combines:
-- **Punjabi-inspired syntax** for readability
-- **Python-like simplicity** for learning
-- **Strong typing support** for reliability
-- **Fast execution** for development speed
-
-Created by **Mr. Angad Singh** to make programming accessible and fun!
-
-### Why Jatti?
-
-✨ **Easy to Learn** - Clear, readable syntax  
-✨ **Fun Syntax** - Punjabi keywords make coding enjoyable  
-✨ **Powerful** - Full OOP, functional, and procedural support  
-✨ **Fast** - Compiled to Python for speed  
-
----
-
-## ✨ Features
-
-### Core Features
-- ✅ **Interpreted Language** - Run code directly
-- ✅ **Dynamic Typing** - Types determined at runtime
-- ✅ **Functions** - First-class functions, closures
-- ✅ **Collections** - Lists, dictionaries, sets
-- ✅ **String Support** - Unicode, string operations
-- ✅ **Exception Handling** - chal_koshish_karle-catch blocks
-- ✅ **File I/O** - Read and write files
-- ✅ **Loops & Conditionals** - Full control flow
-
-### Advanced Features
-- ✅ **Recursion** - Full support for recursive functions
-- ✅ **Lambda Functions** - Anonymous functions
-- ✅ **List Comprehensions** - Compact list creation
-- ✅ **Built-in Functions** - 20+ utility functions
-- ✅ **String Methods** - Powerful string manipulation
-- ✅ **Math Operations** - Complete arithmetic
-- ✅ **Debugging** - Debug mode for tracing
-
-### IDE Support
-- ✅ **VS Code Extension** - Full editor integration
-- ✅ **Syntax Highlighting** - Color-coded syntax
-- ✅ **Run Button** - One-click execution
-- ✅ **Output Panel** - See results instantly
-- ✅ **Error Messages** - Clear error reporting
-
----
-
-## 🚀 Quick Start
-
-### Install Jatti
-
-**Option 1: Download from GitHub**
-```bash
-git clone https://github.com/jatti-lang/jatti-lang
-cd jatti-lang
-```
-
-**Option 2: For VS Code**
-1. Install extension: Search "Jatti Language" in Extensions
-2. Download Jatti CLI from GitHub
-3. Extract to your project folder
-
-### Your First Program
-
-**File: `hello.jatti`**
 ```jatti
 sun_we
     chilla_we "Hello Jatti!"
 ja_we
 ```
 
-**Run it:**
+Run:
+
 ```bash
 python cli.py run hello.jatti
 ```
 
-**Output:**
-```
-Hello Jatti!
-```
+Web playground:
 
----
-
-## 📝 Syntax Reference
-
-### Program Structure
-
-Every Jatti program must have this structure:
-
-```jatti
-sun_we
-    fuddu_chiz Your code here
-ja_we
+```bash
+python playground_server.py
 ```
 
-**Translation:**
-- `sun_we` = "Listen"  (Start main block)
-- `ja_we` = "Go" (End main block)
-- `fuddu_chiz` = Comment
+Open `http://127.0.0.1:8000/`.
 
-### Comments
+## Auth note (current default)
 
-```jatti
-fuddu_chiz This is a comment
-fuddu_chiz Use fuddu_chiz to add notes
-```
+API-key auth is **disabled by default**.
 
----
+- To keep it open: leave `JATTI_REQUIRE_API_KEY` unset (or set it to `0`)
+- To enable later: set `JATTI_REQUIRE_API_KEY=1` and `JATTI_API_KEY=<secret>`
 
-## 🔤 Data Types
+For variables/operators and core syntax, see [LANGUAGE_BASICS.md](./LANGUAGE_BASICS.md).
 
-### Strings
-```
-chal_oye greeting ban "Hello"
-chal_oye name ban "World"
-chilla_we greeting
-```
-
-### Numbers (Integer & Float)
-```
-chal_oye age ban 25
-chal_oye height ban 5.9
-chal_oye pi ban 3.14159
-```
-
-### Boolean
-```
-chal_oye isTrue ban sach
-chal_oye isFalse ban jhoot
-```
-
-### Lists
-```
-chal_oye fruits ban ["apple", "banana", "mango"]
-chal_oye numbers ban [1, 2, 3, 4, 5]
-chal_oye mixed ban [1, "text", 3.14, sach]
-```
-
-### Dictionaries
-```
-chal_oye person ban {
-    "name": "Singh",
-    "age": 25,
-    "city": "Punjab"
-}
-```
-
-### Khaali (None)
-```
-chal_oye empty ban khaali
-```
+<!--
 
 ---
 
@@ -780,3 +635,5 @@ python cli.py run example.jatti
 ---
 
 **Made with ❤️ for the Punjabi tech community**
+
+-->

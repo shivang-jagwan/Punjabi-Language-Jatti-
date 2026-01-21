@@ -249,87 +249,14 @@ chal_oye empty ban khaali
   ```jatti
   je condition1
       fuddu_chiz do something
-  nahin_taan_je condition2
-      fuddu_chiz do something else
-  nahin_taan
-      fuddu_chiz default case
-  ```
+# Jatti VS Code Extension (snapshot folder)
 
-### 4. **Loops**
-- `har_ek` (for loop): Syntax is `har_ek variable iterable`
-- `jadon_tak` (while loop): Condition must follow the keyword
-- `roko_oye_roko` (break): Can only be used inside loops
-- `chalo_oye_chalo` (continue): Can only be used inside loops
-- Loop variables can be used in `chilla_we` but not in assignments (use temp variables instead)
+This folder is a snapshot/duplicate copy.
 
-### 5. **Expressions & Function Calls**
-- User-defined function calls must be in assignment context: `chal_oye result ban function()`
-- Nested function calls (e.g., `range_banao(kinna_lamba(list))`) are not supported - assign to a variable first
-- String concatenation with `te` only works in `chilla_we` statements, not in assignments
-- Use `+` for arithmetic, `te` for string output in print statements
+Use the canonical extension docs in the repo root:
 
----
-
-## ➕ Operations
-
-### Arithmetic
-
-```jatti
-sun_we
-    chal_oye a ban 10
-    chal_oye b ban 3
-    
-    chilla_we a + b          fuddu_chiz 13
-    chilla_we a - b          fuddu_chiz 7
-    chilla_we a * b          fuddu_chiz 30
-    chilla_we a / b          fuddu_chiz 3.33
-    chilla_we a % b          fuddu_chiz 1
-ja_we
-```
-
-### Comparison
-
-```jatti
-sun_we
-    chal_oye x ban 5
-    
-    chilla_we x vadha_hai 3     fuddu_chiz sach
-    chilla_we x nikka_hai 10      fuddu_chiz sach
-    chilla_we x barabar 5       fuddu_chiz sach
-ja_we
-```
-
-### Logical
-
-```jatti
-sun_we
-    chal_oye a ban sach
-    chal_oye b ban jhoot
-    
-    je a te b                   fuddu_chiz AND operator
-        chilla_we "Both sach"
-ja_we
-```
-
----
-
-## 🔀 Control Flow
-
-### If-Else
-
-```jatti
-sun_we
-    chal_oye age ban 18
-    
-    je age vadha_hai 18
-        chilla_we "Adult"
-    nahin_taan
-        chilla_we "Minor"
-ja_we
-```
-
-### For Loop
-
+- [jatti-lang-vscode/README.md](../../../jatti-lang-vscode/README.md)
+- [jatti-lang-vscode/USER_SETUP_GUIDE.md](../../../jatti-lang-vscode/USER_SETUP_GUIDE.md)
 ```jatti
 sun_we
     har_ek i range_banao(1, 5)

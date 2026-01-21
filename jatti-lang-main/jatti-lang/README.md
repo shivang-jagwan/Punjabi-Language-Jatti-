@@ -1,63 +1,13 @@
-# 🚀 Jatti Language
+# Jatti (snapshot folder)
 
-**A Modern Programming Language Inspired by Punjabi**
+This folder is a snapshot/duplicate copy.
 
-```
-     ██  █████  ████████ ████████ ██   ██ 
-     ██ ██   ██    ██       ██    ██   ██
-     ██ ███████    ██       ██    ██   ██
-██   ██ ██   ██    ██       ██    ██  
- █████  ██   ██    ██       ██    ██   ██
-```
+Use the canonical docs from the repo root:
 
-**Version:** 0.4.1  
-**Status:** Production Ready ✅ (All Critical Bugs Fixed)  
-**License:** MIT  
-**Author:** Mr. AngadSingh  
-**Last Updated:** January 2026
-
----
-
-## 📋 Table of Contents
-
-1. [About Jatti](#about-jatti)
-2. [Features](#features)
-3. [Quick Start](#quick-start)
-4. [Syntax Reference](#syntax-reference)
-5. [Data Types](#data-types)
-6. [Keywords](#keywords)
-7. [Operations](#operations)
-8. [Control Flow](#control-flow)
-9. [Functions](#functions)
-10. [Collections](#collections)
-11. [Built-in Functions](#built-in-functions)
-12. [Examples](#examples)
-13. [Installation](#installation)
-14. [VS Code Extension](#vs-code-extension)
-15. [Documentation](#documentation)
-
----
-
-## 🎯 About Jatti
-
-Jatti is a **modern, interpreted programming language** that combines:
-- **Punjabi-inspired syntax** for readability
-- **Python-like simplicity** for learning
-- **Strong typing support** for reliability
-- **Fast execution** for development speed
-
-Created by **Mr. Angad Singh** to make programming accessible and fun!
-
-### Why Jatti?
-
-✨ **Easy to Learn** - Clear, readable syntax  
-✨ **Fun Syntax** - Punjabi keywords make coding enjoyable  
-✨ **Powerful** - Full OOP, functional, and procedural support  
-✨ **Fast** - Compiled to Python for speed  
-
----
-
-## ✨ Features
+- [README.md](../../README.md)
+- [LOCAL_SETUP.md](../../LOCAL_SETUP.md)
+- [LANGUAGE_BASICS.md](../../LANGUAGE_BASICS.md)
+- [DEPLOYMENT.md](../../DEPLOYMENT.md)
 
 ### Core Features
 - ✅ **Interpreted Language** - Run code directly
