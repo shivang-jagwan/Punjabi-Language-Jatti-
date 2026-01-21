@@ -10,10 +10,6 @@ services:
       # Address can be a domain (recommended) or :80 for local testing.
       SITE_ADDRESS: ${SITE_ADDRESS:-:80}
 
-      # Protect the whole playground with HTTP Basic Auth.
-      BASIC_AUTH_USER: ${BASIC_AUTH_USER:-admin}
-      BASIC_AUTH_HASH: ${BASIC_AUTH_HASH:-}
-
       # Used only for injecting X-API-Key to the upstream /api/* routes.
       JATTI_API_KEY: ${JATTI_API_KEY:-}
     volumes:

@@ -79,7 +79,7 @@ async function runCode(cm) {
 
       if (resp.status === 401 || data?.error === 'Unauthorized') {
         appendOutput(
-          'Unauthorized. Click "Demo Mode" (top bar) or use admin access, then try again.'
+          'Unauthorized. If this is a deployment, ensure the server/proxy is configured to allow /api/run (API key / header injection).'
         );
       } else {
         appendOutput(data.output || data.error || 'Unknown error');

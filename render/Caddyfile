@@ -5,40 +5,11 @@
 :{$PORT} {
 	encode gzip zstd
 
-	(demo_cookie_set) {
-		header Set-Cookie "jatti_demo=1; Path=/; Max-Age={$DEMO_COOKIE_MAX_AGE:3600}; SameSite=Lax"
-		redir / 302
-	}
-
-	(demo_cookie_clear) {
-		header Set-Cookie "jatti_demo=; Path=/; Max-Age=0; SameSite=Lax"
-		redir / 302
-	}
-
-	@demo_on path /demo
-	handle @demo_on {
-		import demo_cookie_set
-	}
-
-	@demo_off path /demo/logout
-	handle @demo_off {
-		import demo_cookie_clear
-	}
-
-	# Allow API only when demo cookie is present.
-	@api_allowed {
-		path /api/*
-		header Cookie *jatti_demo=1*
-	}
-	handle @api_allowed {
+	@api path /api/*
+	handle @api {
 		reverse_proxy 127.0.0.1:8000 {
 			header_up X-API-Key {$JATTI_API_KEY}
 		}
-	}
-
-	# Block API otherwise.
-	handle /api/* {
-		respond "Unauthorized" 401
 	}
 
 	# Everything else (static UI + /healthz)

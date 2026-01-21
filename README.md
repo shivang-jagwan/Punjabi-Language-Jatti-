@@ -655,7 +655,6 @@ Steps:
 
 Notes:
 
-- Click **Demo Mode** in the UI to enable running code.
 - Tune limits in Render env vars: `JATTI_TIMEOUT_SEC`, `JATTI_MAX_CODE_BYTES`, `JATTI_MAX_OUTPUT_BYTES`, `JATTI_RATE_*`.
 
 ---

@@ -64,9 +64,7 @@ Notes:
 
 ## Secure Deploy (Recommended)
 
-For a more secure deployment, run the playground **behind a reverse proxy** that:
-- Provides **demo mode** (no login) via a button that enables API access
-- Supports optional **admin login** (HTTP Basic Auth) for API access
+For a deployment, run the playground **behind a reverse proxy** that:
 - Injects `X-API-Key` for `/api/*` requests so the browser **never needs to know** the API key
 - Exposes only ports 80/443 publicly (the app container is not published)
 
@@ -80,18 +78,8 @@ Copy `.env.example` → `.env` and set at minimum:
 
 - `JATTI_API_KEY` (a long random string)
 - `SITE_ADDRESS` (your domain, e.g. `playground.example.com`)
-- `BASIC_AUTH_USER`
-- `BASIC_AUTH_HASH`
 
-### 2) Generate `BASIC_AUTH_HASH`
-
-On the server with Docker installed:
-
-- `docker run --rm caddy:2 caddy hash-password --plaintext "yourPasswordHere"`
-
-Put the output hash into `.env` as `BASIC_AUTH_HASH=...`.
-
-### 3) Start
+### 2) Start
 
 - `docker compose -f docker-compose.secure.yml up --build -d`
 
@@ -101,16 +89,6 @@ Open:
 Notes:
 - Caddy will automatically provision TLS certificates for real domains.
 - For local testing, set `SITE_ADDRESS=:80` and use `http://localhost/`.
-
-### Demo Mode (no login)
-
-With the secure proxy setup:
-- The UI loads without credentials.
-- Clicking **Demo Mode** sets a short-lived cookie and enables running code.
-- Use **Exit Demo** to disable it.
-
-You can control demo cookie lifetime with:
-- `DEMO_COOKIE_MAX_AGE` (default 3600 seconds)
 
 ## Hardening (Important)
 

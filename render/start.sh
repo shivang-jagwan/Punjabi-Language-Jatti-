@@ -14,12 +14,6 @@ APP_PORT="8000"
 : "${JATTI_MAX_OUTPUT_BYTES:=200000}"
 : "${JATTI_RATE_WINDOW_SEC:=10}"
 : "${JATTI_RATE_MAX_REQ:=30}"
-: "${DEMO_COOKIE_MAX_AGE:=3600}"
-
-if [ -z "${JATTI_API_KEY:-}" ]; then
-  echo "JATTI_API_KEY is required for Render deployment" >&2
-  exit 1
-fi
 
 python playground_server.py --host "$APP_HOST" --port "$APP_PORT" &
 
