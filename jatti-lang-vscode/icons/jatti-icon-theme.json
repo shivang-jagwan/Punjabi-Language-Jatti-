@@ -1,0 +1,10 @@
+{
+  "iconDefinitions": {
+    "jatti-file": {
+      "iconPath": "./jatti.svg"
+    }
+  },
+  "fileExtensions": {
+    "jatti": "jatti-file"
+  }
+}

@@ -1,0 +1,14 @@
+services:
+  jatti-playground:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      # Compose automatically reads ./.env (if present) for ${VAR} interpolation.
+      # IMPORTANT: Set a strong key before binding publicly.
+      JATTI_API_KEY: ${JATTI_API_KEY:-}
+      JATTI_TIMEOUT_SEC: ${JATTI_TIMEOUT_SEC:-2.5}
+      JATTI_MAX_CODE_BYTES: ${JATTI_MAX_CODE_BYTES:-200000}
+      JATTI_MAX_OUTPUT_BYTES: ${JATTI_MAX_OUTPUT_BYTES:-200000}
+      JATTI_RATE_WINDOW_SEC: ${JATTI_RATE_WINDOW_SEC:-10}
+      JATTI_RATE_MAX_REQ: ${JATTI_RATE_MAX_REQ:-30}

@@ -1,0 +1,6 @@
+sun_we
+    chal_oye total ban 0
+    har_ek i range_banao(1, 6)
+        chal_oye total ban total + i
+    chilla_we total
+ja_we

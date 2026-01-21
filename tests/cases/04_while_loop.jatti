@@ -1,0 +1,8 @@
+sun_we
+    chal_oye i ban 1
+    chal_oye total ban 0
+    jadon_tak i nikka_ya_barabar 5
+        chal_oye total ban total + i
+        chal_oye i ban i + 1
+    chilla_we total
+ja_we

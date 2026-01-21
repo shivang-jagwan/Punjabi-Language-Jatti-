@@ -1,0 +1,7 @@
+sun_we
+    chal_oye x ban 5
+    je x vadha_hai 3
+        chilla_we "big"
+    nahin_taan
+        chilla_we "small"
+ja_we

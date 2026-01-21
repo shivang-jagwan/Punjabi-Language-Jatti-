@@ -1,0 +1,12 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "functions": {
+    "api/**/*.py": {
+      "excludeFiles": "{**/__pycache__/**,**/*.pyc,.venv/**,tests/**,jatti-lang-main/**,jatti-lang-vscode/**,frontend/**,icons/**,syntaxes/**,*.md,Dockerfile,docker-compose*.yml,Caddyfile,.git/**}"
+    }
+  },
+  "rewrites": [
+    { "source": "/", "destination": "/frontend/index.html" },
+    { "source": "/assets/(.*)", "destination": "/frontend/assets/$1" }
+  ]
+}

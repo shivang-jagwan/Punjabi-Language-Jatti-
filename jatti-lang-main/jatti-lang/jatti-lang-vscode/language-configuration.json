@@ -1,0 +1,19 @@
+{
+  "comments": {
+    "lineComment": "faltu_hai"
+  },
+
+  "indentationRules": {
+    "increaseIndentPattern": "^\\s*(sun_we|je|nahin_taan_je|nahin_taan|kaam|jadon_tak|har_ek)\\b.*$",
+    "decreaseIndentPattern": "^\\s*(ja_we)\\b.*$"
+  },
+
+  "onEnterRules": [
+    {
+      "beforeText": "^\\s*(sun_we|je|nahin_taan_je|nahin_taan|kaam|jadon_tak|har_ek)\\b.*$",
+      "action": {
+        "indentAction": "indent"
+      }
+    }
+  ]
+}

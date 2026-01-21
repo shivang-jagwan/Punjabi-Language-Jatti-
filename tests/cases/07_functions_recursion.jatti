@@ -1,0 +1,9 @@
+sun_we
+    kaam fact(n)
+        je n barabar 0
+            wapas_kar 1
+        nahin_taan
+            wapas_kar n * fact(n - 1)
+
+    chilla_we fact(6)
+ja_we

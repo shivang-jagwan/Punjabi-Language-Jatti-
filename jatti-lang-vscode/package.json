@@ -1,0 +1,137 @@
+{
+  "name": "jatti-lang",
+  "displayName": "Jatti Language",
+  "description": "Support for Jatti programming language with run button",
+  "version": "0.1.0",
+  "publisher": "jatti-lang",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "jatti",
+        "aliases": [
+          "Jatti",
+          "jatti"
+        ],
+        "extensions": [
+          ".jatti"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "jatti",
+        "scopeName": "source.jatti",
+        "path": "./syntaxes/jatti.tmLanguage.json"
+      }
+    ],
+    "iconThemes": [
+      {
+        "id": "jatti-icons",
+        "label": "Jatti File Icons",
+        "path": "./icons/jatti-icon-theme.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "jatti.run",
+        "title": "Run Jatti File",
+        "category": "Jatti",
+        "icon": "$(play)"
+      },
+      {
+        "command": "jatti.runInTerminal",
+        "title": "Run in Terminal",
+        "category": "Jatti",
+        "icon": "$(terminal)"
+      },
+      {
+        "command": "jatti.build",
+        "title": "Build to Python",
+        "category": "Jatti",
+        "icon": "$(wrench)"
+      },
+      {
+        "command": "jatti.format",
+        "title": "Format File",
+        "category": "Jatti",
+        "icon": "$(file-code)"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "when": "resourceLangId == jatti",
+          "command": "jatti.run",
+          "group": "navigation@1"
+        },
+        {
+          "when": "resourceLangId == jatti",
+          "command": "jatti.runInTerminal",
+          "group": "navigation@2"
+        },
+        {
+          "when": "resourceLangId == jatti",
+          "command": "jatti.build",
+          "group": "navigation@3"
+        },
+        {
+          "when": "resourceLangId == jatti",
+          "command": "jatti.format",
+          "group": "navigation@4"
+        }
+      ],
+      "editor/context": [
+        {
+          "when": "resourceLangId == jatti",
+          "command": "jatti.run",
+          "group": "1_modification"
+        },
+        {
+          "when": "resourceLangId == jatti",
+          "command": "jatti.runInTerminal",
+          "group": "1_modification"
+        },
+        {
+          "when": "resourceLangId == jatti",
+          "command": "jatti.build",
+          "group": "1_modification"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "jatti.run",
+        "key": "ctrl+shift+j",
+        "when": "resourceLangId == jatti"
+      },
+      {
+        "command": "jatti.runInTerminal",
+        "key": "ctrl+shift+t",
+        "when": "resourceLangId == jatti"
+      }
+    ],
+    "configuration": {
+      "title": "Jatti",
+      "properties": {
+        "jatti.cliPath": {
+          "type": "string",
+          "default": "",
+          "description": "Path to Jatti cli.py (either a folder containing cli.py, or a full path to cli.py). If empty, the extension tries to auto-detect in the file folder or workspace root."
+        },
+        "jatti.pythonPath": {
+          "type": "string",
+          "default": "python",
+          "description": "Python executable used to run Jatti (e.g., python, python3, or an absolute path)."
+        }
+      }
+    }
+  }
+}

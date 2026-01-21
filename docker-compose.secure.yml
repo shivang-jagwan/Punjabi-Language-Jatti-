@@ -1,0 +1,45 @@
+services:
+  # Public entrypoint (TLS + Basic Auth + header injection)
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      # Address can be a domain (recommended) or :80 for local testing.
+      SITE_ADDRESS: ${SITE_ADDRESS:-:80}
+
+      # Protect the whole playground with HTTP Basic Auth.
+      BASIC_AUTH_USER: ${BASIC_AUTH_USER:-admin}
+      BASIC_AUTH_HASH: ${BASIC_AUTH_HASH:-}
+
+      # Used only for injecting X-API-Key to the upstream /api/* routes.
+      JATTI_API_KEY: ${JATTI_API_KEY:-}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - jatti-playground
+
+  # Internal app (NOT exposed publicly)
+  jatti-playground:
+    build: .
+    restart: unless-stopped
+    environment:
+      # Must be set (and match Caddy's JATTI_API_KEY) so direct calls are rejected.
+      JATTI_API_KEY: ${JATTI_API_KEY:-}
+
+      # Safety limits
+      JATTI_TIMEOUT_SEC: ${JATTI_TIMEOUT_SEC:-2.5}
+      JATTI_MAX_CODE_BYTES: ${JATTI_MAX_CODE_BYTES:-200000}
+      JATTI_MAX_OUTPUT_BYTES: ${JATTI_MAX_OUTPUT_BYTES:-200000}
+      JATTI_RATE_WINDOW_SEC: ${JATTI_RATE_WINDOW_SEC:-10}
+      JATTI_RATE_MAX_REQ: ${JATTI_RATE_MAX_REQ:-30}
+
+    # No host port published: only accessible to caddy via the Docker network.
+
+volumes:
+  caddy_data:
+  caddy_config:
