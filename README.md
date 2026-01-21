@@ -632,11 +632,11 @@ Steps:
 1) Push the repo to GitHub.
 2) Import the repo in Vercel.
 3) Set Environment Variables in Vercel:
-     - `JATTI_API_KEY` (recommended)
+    - Optional: `JATTI_REQUIRE_API_KEY=1` and `JATTI_API_KEY` (to enforce X-API-Key)
      - Optional: `JATTI_TIMEOUT_SEC`, `JATTI_MAX_CODE_BYTES`, `JATTI_MAX_OUTPUT_BYTES`
 4) Deploy.
 
-Security note: this executes user-provided code. Use `JATTI_API_KEY` and conservative limits.
+Security note: this executes user-provided code. Use conservative limits; if you enable auth, use `JATTI_REQUIRE_API_KEY=1` + a strong `JATTI_API_KEY`.
 
 ---
 

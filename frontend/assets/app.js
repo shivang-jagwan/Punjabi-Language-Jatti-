@@ -56,14 +56,43 @@ function appendOutput(text) {
   out.textContent = text;
 }
 
+const API_KEY_STORAGE_KEY = 'jatti.apiKey';
+
+function getApiKey() {
+  const el = $('apiKeyInput');
+  const fromInput = (el && typeof el.value === 'string') ? el.value.trim() : '';
+  if (fromInput) return fromInput;
+  try {
+    return (localStorage.getItem(API_KEY_STORAGE_KEY) || '').trim();
+  } catch {
+    return '';
+  }
+}
+
+function setApiKey(value) {
+  const v = (value || '').trim();
+  const el = $('apiKeyInput');
+  if (el) el.value = v;
+  try {
+    if (v) localStorage.setItem(API_KEY_STORAGE_KEY, v);
+    else localStorage.removeItem(API_KEY_STORAGE_KEY);
+  } catch {
+    // ignore
+  }
+}
+
 async function runCode(cm) {
   setStatus('running…');
   $('runBtn').disabled = true;
 
   try {
+    const apiKey = getApiKey();
+    const headers = { 'Content-Type': 'application/json' };
+    if (apiKey) headers['X-API-Key'] = apiKey;
+
     const resp = await fetch('/api/run', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers,
       body: JSON.stringify({ code: cm.getValue() }),
     });
 
@@ -79,8 +108,10 @@ async function runCode(cm) {
 
       if (resp.status === 401 || data?.error === 'Unauthorized') {
         appendOutput(
-          'Unauthorized. If this is a deployment, ensure the server/proxy is configured to allow /api/run (API key / header injection).'
+          'Unauthorized. This happens only if the server enabled API-key enforcement (JATTI_REQUIRE_API_KEY=1).\n\nFix: either enter the API key here and run again, or disable JATTI_REQUIRE_API_KEY on the server/proxy.'
         );
+        const keyEl = $('apiKeyInput');
+        if (keyEl && !keyEl.value) keyEl.focus();
       } else {
         appendOutput(data.output || data.error || 'Unknown error');
       }
@@ -115,6 +146,13 @@ async function runCode(cm) {
   });
 
   cm.setValue(DEFAULT_CODE);
+
+  // Restore saved API key (optional)
+  setApiKey(getApiKey());
+  const keyEl = $('apiKeyInput');
+  if (keyEl) {
+    keyEl.addEventListener('input', () => setApiKey(keyEl.value));
+  }
 
   select.addEventListener('change', () => {
     const s = samples.find(x => x.name === select.value);

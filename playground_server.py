@@ -70,9 +70,18 @@ def _get_env_int(name: str, default: int) -> int:
         return default
 
 
+def _env_truthy(name: str, default: bool = False) -> bool:
+    raw = os.environ.get(name)
+    if raw is None:
+        return default
+    v = str(raw).strip().lower()
+    return v in ("1", "true", "yes", "y", "on")
+
+
 _load_dotenv(REPO_ROOT / ".env")
 
 JATTI_API_KEY = os.environ.get("JATTI_API_KEY", "").strip()
+REQUIRE_API_KEY = _env_truthy("JATTI_REQUIRE_API_KEY", default=False)
 MAX_CODE_BYTES = _get_env_int("JATTI_MAX_CODE_BYTES", 200_000)
 MAX_OUTPUT_BYTES = _get_env_int("JATTI_MAX_OUTPUT_BYTES", 200_000)
 RUN_TIMEOUT_SEC = float(os.environ.get("JATTI_TIMEOUT_SEC", "2.5").strip() or 2.5)
@@ -256,7 +265,13 @@ class PlaygroundHandler(BaseHTTPRequestHandler):
             self._send_json(HTTPStatus.TOO_MANY_REQUESTS, {"success": False, "error": "Rate limit exceeded"})
             return
 
-        if JATTI_API_KEY:
+        if REQUIRE_API_KEY:
+            if not JATTI_API_KEY:
+                self._send_json(
+                    HTTPStatus.INTERNAL_SERVER_ERROR,
+                    {"success": False, "error": "Server misconfigured: JATTI_API_KEY is missing"},
+                )
+                return
             provided = (self.headers.get("X-API-Key") or "").strip()
             if provided != JATTI_API_KEY:
                 self._send_json(HTTPStatus.UNAUTHORIZED, {"success": False, "error": "Unauthorized"})

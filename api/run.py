@@ -18,6 +18,14 @@ def _get_env_int(name: str, default: int) -> int:
         return default
 
 
+def _env_truthy(name: str, default: bool = False) -> bool:
+    raw = os.environ.get(name)
+    if raw is None:
+        return default
+    v = str(raw).strip().lower()
+    return v in ("1", "true", "yes", "y", "on")
+
+
 def _json_response(handler: BaseHTTPRequestHandler, status: int, payload: dict) -> None:
     data = json.dumps(payload).encode("utf-8")
     handler.send_response(status)
@@ -119,8 +127,15 @@ class handler(BaseHTTPRequestHandler):
             return _json_response(self, HTTPStatus.NOT_FOUND, {"success": False, "error": "Not found"})
 
         # Auth
-        api_key = (os.environ.get("JATTI_API_KEY") or "").strip()
-        if api_key:
+        require_api_key = _env_truthy("JATTI_REQUIRE_API_KEY", default=False)
+        if require_api_key:
+            api_key = (os.environ.get("JATTI_API_KEY") or "").strip()
+            if not api_key:
+                return _json_response(
+                    self,
+                    HTTPStatus.INTERNAL_SERVER_ERROR,
+                    {"success": False, "error": "Server misconfigured: JATTI_API_KEY is missing"},
+                )
             provided = (self.headers.get("X-API-Key") or "").strip()
             if provided != api_key:
                 return _json_response(self, HTTPStatus.UNAUTHORIZED, {"success": False, "error": "Unauthorized"})

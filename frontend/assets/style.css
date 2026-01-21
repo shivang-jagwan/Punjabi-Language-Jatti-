@@ -70,6 +70,16 @@ body {
   outline: none;
 }
 
+.field input {
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 7px 10px;
+  outline: none;
+  width: 220px;
+}
+
 .btn {
   background: var(--panel);
   color: var(--text);

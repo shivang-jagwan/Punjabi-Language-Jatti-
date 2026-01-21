@@ -39,7 +39,7 @@ This repo is Vercel-ready:
 - API: `api/run.py` at `/api/run`
 
 In Vercel Project Settings → Environment Variables, set:
-- `JATTI_API_KEY` (recommended)
+- Optional: `JATTI_REQUIRE_API_KEY=1` and `JATTI_API_KEY` (to enforce X-API-Key)
 - Optional limits: `JATTI_TIMEOUT_SEC`, `JATTI_MAX_CODE_BYTES`, `JATTI_MAX_OUTPUT_BYTES`
 
 ## Deploy (Render)
@@ -50,7 +50,7 @@ It deploys a single Docker web service that runs:
 - the Python playground server on `127.0.0.1:8000` (internal)
 - an in-container reverse proxy on `$PORT` that:
   - injects `X-API-Key` for `/api/*`
-  - uses the **Demo Mode** button (`/demo`) to enable running code
+  - keeps the API key out of the browser (recommended)
 
 Steps:
 
@@ -59,7 +59,7 @@ Steps:
 3) Deploy and open the `.onrender.com` URL.
 
 Notes:
-- Running code is enabled after clicking **Demo Mode**.
+- If you enable auth (`JATTI_REQUIRE_API_KEY=1`), the proxy can inject `X-API-Key` for `/api/*` so the browser doesn't need to know the key.
 - You can tune limits with `JATTI_*` env vars in Render.
 
 ## Secure Deploy (Recommended)
@@ -76,7 +76,7 @@ This repo includes:
 
 Copy `.env.example` → `.env` and set at minimum:
 
-- `JATTI_API_KEY` (a long random string)
+- Optional (if enabling auth): `JATTI_REQUIRE_API_KEY=1` and `JATTI_API_KEY` (a long random string)
 - `SITE_ADDRESS` (your domain, e.g. `playground.example.com`)
 
 ### 2) Start
@@ -96,8 +96,8 @@ If you bind the server to `0.0.0.0` or deploy on a VPS, set an API key and limit
 
 ### API Key
 
-- Set env var: `JATTI_API_KEY`
-- The UI uses the API without a key by default. For public deployments, put the playground behind a reverse proxy that injects the header or protect the whole site with auth.
+- Optional: set `JATTI_REQUIRE_API_KEY=1` and `JATTI_API_KEY`
+- The UI can send `X-API-Key` directly (API Key box), or you can keep the key out of the browser by using a reverse proxy that injects the header.
 
 Tip: you can also create a `.env` file in the repo root (see `.env.example`). The server will load it automatically.
 
@@ -114,7 +114,7 @@ Tip: you can also create a `.env` file in the repo root (see `.env.example`). Th
 Create `.env` from `.env.example`:
 
 - Copy: `.env.example` → `.env`
-- Edit values (especially `JATTI_API_KEY`)
+- Edit values (especially `JATTI_REQUIRE_API_KEY` / `JATTI_API_KEY` if enabling auth)
 
 ### Public bind
 
