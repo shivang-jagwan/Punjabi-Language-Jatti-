@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: jatti-playground
+    runtime: docker
+    dockerfilePath: render/Dockerfile
+    plan: starter
+    autoDeployTrigger: commit
+    healthCheckPath: /healthz
+    envVars:
+      # Secret used only between Caddy -> Python server (browser never sees it)
+      - key: JATTI_API_KEY
+        generateValue: true
+
+      # Demo-mode cookie lifetime (seconds)
+      - key: DEMO_COOKIE_MAX_AGE
+        value: "3600"
+
+      # Safety limits
+      - key: JATTI_TIMEOUT_SEC
+        value: "2.5"
+      - key: JATTI_MAX_CODE_BYTES
+        value: "200000"
+      - key: JATTI_MAX_OUTPUT_BYTES
+        value: "200000"
+      - key: JATTI_RATE_WINDOW_SEC
+        value: "10"
+      - key: JATTI_RATE_MAX_REQ
+        value: "30"

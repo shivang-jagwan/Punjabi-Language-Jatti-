@@ -42,6 +42,26 @@ In Vercel Project Settings → Environment Variables, set:
 - `JATTI_API_KEY` (recommended)
 - Optional limits: `JATTI_TIMEOUT_SEC`, `JATTI_MAX_CODE_BYTES`, `JATTI_MAX_OUTPUT_BYTES`
 
+## Deploy (Render)
+
+This repo includes a Render Blueprint at `render.yaml`.
+
+It deploys a single Docker web service that runs:
+- the Python playground server on `127.0.0.1:8000` (internal)
+- an in-container reverse proxy on `$PORT` that:
+  - injects `X-API-Key` for `/api/*`
+  - uses the **Demo Mode** button (`/demo`) to enable running code
+
+Steps:
+
+1) In Render, create a new Blueprint and point it to your GitHub repo.
+2) Render will create the service from `render.yaml`.
+3) Deploy and open the `.onrender.com` URL.
+
+Notes:
+- Running code is enabled after clicking **Demo Mode**.
+- You can tune limits with `JATTI_*` env vars in Render.
+
 ## Secure Deploy (Recommended)
 
 For a more secure deployment, run the playground **behind a reverse proxy** that:

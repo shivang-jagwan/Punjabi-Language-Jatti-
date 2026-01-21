@@ -36,6 +36,7 @@
 15. [Documentation](#documentation)
 16. [Web Playground](#web-playground)
 17. [Deploy (Vercel)](#deploy-vercel)
+18. [Deploy (Render)](#deploy-render)
 
 ---
 
@@ -636,6 +637,26 @@ Steps:
 4) Deploy.
 
 Security note: this executes user-provided code. Use `JATTI_API_KEY` and conservative limits.
+
+---
+
+## Deploy (Render)
+
+Render deployment is included via a Blueprint file:
+
+- [render.yaml](render.yaml)
+
+Steps:
+
+1) In Render Dashboard: New → **Blueprint**.
+2) Select your GitHub repo.
+3) Render reads [render.yaml](render.yaml) and provisions the service.
+4) Deploy and open the provided `.onrender.com` URL.
+
+Notes:
+
+- Click **Demo Mode** in the UI to enable running code.
+- Tune limits in Render env vars: `JATTI_TIMEOUT_SEC`, `JATTI_MAX_CODE_BYTES`, `JATTI_MAX_OUTPUT_BYTES`, `JATTI_RATE_*`.
 
 ---
 
