@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 import * as path from 'path';
 import * as fs from 'fs';
 import { execSync } from 'child_process';
+import { JattiLLMClient, registerLLMCommands } from './llmClient';
 
 const KEYWORDS = [
   'sun_we', 'ja_we', 'chal_oye', 'ban', 'chilla_we', 'fuddu_chiz',
@@ -22,6 +23,10 @@ let jattiOutputChannel: vscode.OutputChannel;
 
 export function activate(context: vscode.ExtensionContext) {
   jattiOutputChannel = vscode.window.createOutputChannel('Jatti');
+  
+  // Initialize LLM Client
+  const llmClient = new JattiLLMClient(context);
+  registerLLMCommands(context, llmClient);
   
   const runDisposable = vscode.commands.registerCommand('jatti.runFile', async () => {
     const editor = vscode.window.activeTextEditor;

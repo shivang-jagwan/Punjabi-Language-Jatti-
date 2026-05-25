@@ -1,0 +1,34 @@
+# Python dependencies for Jatti LLM Model Building
+
+# Core ML frameworks
+torch>=2.0.0
+transformers>=4.35.0
+datasets>=2.14.0
+accelerate>=0.24.0
+
+# OpenAI API (for fine-tuning with OpenAI)
+openai>=1.0.0
+
+# Hugging Face ecosystem
+huggingface-hub>=0.17.0
+peft>=0.7.0  # LoRA and other adapters
+bitsandbytes>=0.41.0  # 8-bit optimization
+
+# Inference & Serving
+flask>=3.0.0
+flask-cors>=4.0.0
+python-dotenv>=1.0.0
+
+# Data handling
+pandas>=2.0.0
+numpy>=1.24.0
+jsonlines>=4.0.0
+
+# Utilities
+tqdm>=4.66.0
+pyyaml>=6.0
+click>=8.1.0
+
+# Development
+pytest>=7.4.0
+black>=23.11.0
