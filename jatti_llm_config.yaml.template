@@ -1,0 +1,179 @@
+# Jatti LLM Configuration Template
+# Copy this file and customize for your setup
+# Usage: python scripts/config.py show --file jatti_llm_config.yaml
+
+# Model provider: "openai" or "huggingface"
+model_type: openai
+
+# OpenAI Configuration (for gpt-3.5-turbo, gpt-4, etc)
+openai:
+  # Model name for API calls
+  model: gpt-3.5-turbo
+  
+  # API Key (leave as is, will load from OPENAI_API_KEY env var)
+  # Or set directly: sk-...
+  api_key: ${OPENAI_API_KEY}
+  
+  # OpenAI API base URL
+  base_url: https://api.openai.com/v1
+  
+  # Request timeout in seconds
+  timeout: 60
+  
+  # Number of retries on failure
+  max_retries: 3
+  
+  # Fine-tuning configuration
+  fine_tuning:
+    epochs: 3
+    batch_size: 32
+    learning_rate: 0.00002
+
+# Hugging Face Configuration (for CodeLlama, Llama, etc)
+huggingface:
+  # Model identifier from huggingface.co
+  model: meta-llama/CodeLlama-7b-hf
+  
+  # Device: "auto", "cuda", "cpu"
+  device: auto
+  
+  # Data type: "float16", "float32", "bfloat16"
+  dtype: float16
+  
+  # Memory limit in GB (None = unlimited)
+  max_memory: null
+  
+  # Fine-tuning configuration
+  fine_tuning:
+    epochs: 3
+    batch_size: 8
+    learning_rate: 0.0001
+    
+    # Use LoRA for efficient fine-tuning (10x smaller, 10x faster)
+    use_lora: true
+    lora_rank: 8
+    lora_alpha: 16
+    lora_dropout: 0.1
+  
+  # Output directory for fine-tuned model
+  output_dir: ./jatti_codellama_ft
+
+# Training data configuration
+data:
+  # Path to training data (JSONL format)
+  train_file: training_data.jsonl
+  
+  # Fraction for testing (0.0-1.0)
+  test_size: 0.1
+  
+  # Fraction for validation (0.0-1.0)
+  val_size: 0.1
+  
+  # Random seed for reproducibility
+  seed: 42
+  
+  # Maximum sequence length
+  max_seq_length: 512
+  
+  # Truncate sequences longer than max_seq_length
+  truncate: true
+
+# Inference server configuration
+inference:
+  # Server host
+  host: localhost
+  
+  # Server port
+  port: 5000
+  
+  # Path to fine-tuned model (for huggingface)
+  # Leave null to use model from config
+  model_path: null
+  
+  # Use HuggingFace authentication token
+  use_auth_token: false
+  
+  # Cache directory for models
+  cache_dir: ./.cache
+  
+  # Debug mode (verbose logging)
+  debug: false
+
+# Logging configuration
+logging:
+  # Log level: DEBUG, INFO, WARNING, ERROR, CRITICAL
+  level: INFO
+  
+  # Log format
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  
+  # Log file (null = console only)
+  file: null
+
+# Monitoring and metrics
+monitoring:
+  # Track training metrics
+  track_metrics: true
+  
+  # Directory to save metrics
+  save_dir: ./metrics
+  
+  # Log to Weights & Biases (wandb.ai)
+  log_wandb: false
+  
+  # Weights & Biases project name
+  wandb_project: jatti-llm
+
+# ============================================================================
+# QUICK PROFILES - Uncomment one to use
+# ============================================================================
+
+# DEVELOPMENT PROFILE (fast testing, minimal resources)
+# Uncomment these lines and comment out the above:
+# model_type: huggingface
+# huggingface:
+#   model: gpt2
+#   dtype: float32
+#   fine_tuning:
+#     epochs: 1
+#     batch_size: 4
+
+# STAGING PROFILE (balanced, medium resources)
+# model_type: huggingface
+# huggingface:
+#   model: meta-llama/CodeLlama-7b-hf
+#   dtype: float16
+#   fine_tuning:
+#     epochs: 2
+#     batch_size: 8
+#     use_lora: true
+
+# PRODUCTION PROFILE (high quality, using OpenAI)
+# model_type: openai
+# openai:
+#   model: gpt-4
+#   fine_tuning:
+#     epochs: 5
+#     batch_size: 64
+
+# ============================================================================
+# ENVIRONMENT VARIABLE OVERRIDES
+# ============================================================================
+# The following env vars will override config file:
+#
+# JATTI_MODEL_TYPE         → model_type
+# JATTI_OPENAI_KEY         → openai.api_key
+# JATTI_OPENAI_MODEL       → openai.model
+# JATTI_HF_MODEL           → huggingface.model
+# JATTI_DATA_FILE          → data.train_file
+# JATTI_INFERENCE_PORT     → inference.port
+# JATTI_INFERENCE_HOST     → inference.host
+# JATTI_EPOCHS             → openai.fine_tuning.epochs
+# JATTI_BATCH_SIZE         → openai.fine_tuning.batch_size
+# JATTI_DEBUG              → inference.debug
+# JATTI_LOG_LEVEL          → logging.level
+#
+# Example:
+# export JATTI_MODEL_TYPE=openai
+# export JATTI_EPOCHS=5
+# python scripts/quickstart.py .
