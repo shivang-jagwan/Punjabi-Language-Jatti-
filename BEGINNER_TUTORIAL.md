@@ -312,16 +312,7 @@ sun_we
 ja_we
 ```
 
-### List Operations
 
-```jatti
-sun_we
-    chal_oye items ban ["a", "b", "c"]
-    
-    chilla_we kinna_lamba(items)      # Output: 3 (length)
-    chilla_we items.contains("b")     # Output: sach (sach)
-ja_we
-```
 
 ---
 

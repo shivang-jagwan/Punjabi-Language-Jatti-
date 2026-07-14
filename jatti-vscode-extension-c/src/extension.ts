@@ -1,11 +1,12 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
 import * as fs from 'fs';
-import { execSync } from 'child_process';
+import { spawn } from 'child_process';
 import { JattiLLMClient, registerLLMCommands } from './llmClient';
+import { ChatViewProvider } from './chatView';
 
 const KEYWORDS = [
-  'sun_we', 'ja_we', 'chal_oye', 'ban', 'chilla_we', 'fuddu_chiz',
+  'sun_we', 'ja_we', 'chal_oye', 'ban', 'chilla_we',
   'je', 'nahin_taan_je', 'nahin_taan', 'har_ek', 'jadon_tak',
   'roko_oye_roko', 'chalo_oye_chalo', 'kaam', 'wapas_kar',
   'chal_koshish_karle', 'pakad', 'vadha_hai', 'nikka_hai',
@@ -25,8 +26,15 @@ export function activate(context: vscode.ExtensionContext) {
   jattiOutputChannel = vscode.window.createOutputChannel('Jatti');
   
   // Initialize LLM Client
-  const llmClient = new JattiLLMClient(context);
+  const llmServerUrl = vscode.workspace.getConfiguration('jatti').get<string>('llmServerUrl') || "https://jatti-llm-backend-production.up.railway.app";
+  const llmClient = new JattiLLMClient(context, llmServerUrl);
   registerLLMCommands(context, llmClient);
+  
+  // Register the AI Assistant Sidebar
+  const chatProvider = new ChatViewProvider(context.extensionUri, llmClient);
+  context.subscriptions.push(
+    vscode.window.registerWebviewViewProvider(ChatViewProvider.viewType, chatProvider)
+  );
   
   const runDisposable = vscode.commands.registerCommand('jatti.runFile', async () => {
     const editor = vscode.window.activeTextEditor;
@@ -63,27 +71,29 @@ export function activate(context: vscode.ExtensionContext) {
     jattiOutputChannel.appendLine(`Running: ${filePath}\n`);
 
     try {
-      const quotedRuntime = `"${runtimePath}"`;
-      const quotedFile = `"${filePath}"`;
-      const commandLine = `${quotedRuntime} run ${quotedFile}`;
+      const jattiProcess = spawn(runtimePath, ['run', filePath]);
       
-      const output = execSync(commandLine, { 
-        encoding: 'utf8',
-        stdio: ['pipe', 'pipe', 'pipe']
+      jattiProcess.stdout.on('data', (data) => {
+        jattiOutputChannel.append(data.toString());
       });
-      
-      if (output) {
-        jattiOutputChannel.append(output);
-      }
-      jattiOutputChannel.appendLine('\n✅ Execution complete');
+
+      jattiProcess.stderr.on('data', (data) => {
+        jattiOutputChannel.append(data.toString());
+      });
+
+      jattiProcess.on('close', (code) => {
+        if (code === 0) {
+          jattiOutputChannel.appendLine('\\n✅ Execution complete');
+        } else {
+          jattiOutputChannel.appendLine(`\\n❌ Execution failed with code ${code}`);
+        }
+      });
+
+      jattiProcess.on('error', (err) => {
+        jattiOutputChannel.appendLine(`\\n❌ Failed to start process: ${err.message}`);
+      });
     } catch (error: any) {
-      if (error.stdout) {
-        jattiOutputChannel.append(error.stdout);
-      }
-      if (error.stderr) {
-        jattiOutputChannel.append(error.stderr);
-      }
-      jattiOutputChannel.appendLine('\n❌ Execution failed');
+      jattiOutputChannel.appendLine(`\\n❌ Execution failed: ${error.message}`);
     }
   });
 
@@ -124,6 +134,11 @@ function resolveRuntimePath(context: vscode.ExtensionContext): string | undefine
   }
 
   if (process.platform === 'win32') {
+    const workspaceRuntime = path.resolve(context.extensionPath, '..', 'c', 'bin', 'jatti.exe');
+    if (fs.existsSync(workspaceRuntime)) {
+      return workspaceRuntime;
+    }
+
     const bundled = path.join(context.extensionPath, 'runtime', 'win32', 'jatti.exe');
     if (fs.existsSync(bundled)) {
       return bundled;

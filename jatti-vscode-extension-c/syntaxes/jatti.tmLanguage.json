@@ -19,10 +19,6 @@
         {
           "name": "comment.line.number-sign.jatti",
           "match": "#.*$"
-        },
-        {
-          "name": "comment.line.fuddu-chiz.jatti",
-          "match": "\\bfuddu_chiz\\b.*$"
         }
       ]
     },

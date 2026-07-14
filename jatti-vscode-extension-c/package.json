@@ -5,6 +5,10 @@
   "icon": "images/logo.png",
   "version": "0.4.0",
   "publisher": "AngadSingh31",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/jatti-lang.git"
+  },
   "engines": {
     "vscode": "^1.85.0"
   },
@@ -30,6 +34,24 @@
     "package.json"
   ],
   "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "jatti-sidebar",
+          "title": "Jatti",
+          "icon": "images/activity-icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "jatti-sidebar": [
+        {
+          "type": "webview",
+          "id": "jatti.chatView",
+          "name": "Jatti AI Assistant"
+        }
+      ]
+    },
     "languages": [
       {
         "id": "jatti",
@@ -96,6 +118,11 @@
           "type": "string",
           "default": "",
           "description": "Optional full path to jatti executable. If empty, extension uses bundled runtime."
+        },
+        "jatti.llmServerUrl": {
+          "type": "string",
+          "default": "https://jatti-llm-backend-production.up.railway.app",
+          "description": "URL for the Jatti LLM generation server."
         }
       }
     }

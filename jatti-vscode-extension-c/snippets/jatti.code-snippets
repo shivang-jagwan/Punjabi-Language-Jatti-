@@ -9,7 +9,7 @@
     "description": "Jatti program skeleton"
   },
   "Print": {
-    "prefix": "phad",
+    "prefix": "chilla",
     "body": [
       "chilla_we ${1:\"text\"}"
     ],

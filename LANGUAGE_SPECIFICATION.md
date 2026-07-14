@@ -354,51 +354,7 @@ saf_karo("  Hello  ")             # "Hello"
 
 ---
 
-## Collections
 
-### List Operations
-```jatti
-chal_oye nums ban [1, 2, 3]
-
-# Add element
-nums.append(4)                    # [1, 2, 3, 4]
-
-# Insert at position
-nums.insert(1, 99)                # [1, 99, 2, 3, 4]
-
-# Check if exists
-nums.contains(99)                 # sach
-
-# Find index
-nums.index_of(2)                  # 1 (0-based)
-
-# fuddu_chizove element
-nums.fuddu_chizove(99)                   # [1, 2, 3, 4]
-
-# Get and fuddu_chizove last
-chal_oye last ban nums.pop()      # 4, nums = [1, 2, 3]
-```
-
-### List Comprehension
-```jatti
-# Simple
-chal_oye squares ban [x * x har_ek x [1, 2, 3, 4, 5]]
-# Result: [1, 4, 9, 16, 25]
-
-# With condition
-chal_oye evens ban [x har_ek x [1, 2, 3, 4, 5] je x % 2 barabar 0]
-# Result: [2, 4]
-
-# With expression
-chal_oye doubled ban [x * 2 har_ek x range(1, 6)]
-# Result: [2, 4, 6, 8, 10]
-```
-
-### Dictionary Comprehension
-```jatti
-chal_oye mapping ban {x: x*2 har_ek x range(1, 5)}
-# Result: {1: 2, 2: 4, 3: 6, 4: 8}
-```
 
 ---
 
@@ -413,15 +369,7 @@ pakad error
 ja_we
 ```
 
-### Raise Exception
-```jatti
-kaam validate_age(age)
-    je age nikka_hai 0
-        throw "Age cannot be negative"
-    nahin_taan
-        chilla_we "Age is valid"
-ja_we
-```
+
 
 ### Error Types
 ```jatti
@@ -477,8 +425,7 @@ jatti run program.jatti
 | `chalo_oye_chalo` | chalo_oye_chalo | Skip iteration |
 | `chal_koshish_karle` | chal_koshish_karle | Start exception block |
 | `pakad` | catch | Catch exception |
-| `throw` | raise/throw | Raise exception |
-| `global` | global | Access global variable |
+
 | `sach` | sach | Boolean sach |
 | `khaali` | jhoot/empty | Boolean jhoot |
 
@@ -544,13 +491,10 @@ Line 7: chal_oye result ban 10 / 0
 ### v0.3.0
 - ✅ Advanced operators (%, **)
 - ✅ Dictionary/Range support
-- ✅ List/Dict comprehensions
-- ✅ Global keyword
 
 ### v0.2.0
 - ✅ Standard library functions
 - ✅ String methods
-- ✅ List operations
 - ✅ Error handling (chal_koshish_karle/catch)
 
 ### v0.1.0

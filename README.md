@@ -66,7 +66,7 @@ Created by **Mr. Angad Singh** to make programming accessible and fun!
 
 ### Advanced Features
 - ✅ **Recursion** - Full support for recursive functions
-- ✅ **List Operations** - Append, indexing, iteration
+- ✅ **List Operations** - Indexing and iteration
 - ✅ **String Methods** - 8 Punjabi string methods (vada_likha, chhota_likha, vand_karo, etc.)
 - ✅ **Built-in Functions** - 8 utility functions plus 2 Punjabi aliases
 - ✅ **Math Operations** - Complete arithmetic including power operator (**)

@@ -11,7 +11,7 @@ export class JattiLLMClient {
   private apiUrl: string;
   private context: vscode.ExtensionContext;
 
-  constructor(context: vscode.ExtensionContext, apiUrl: string = "http://localhost:5000") {
+  constructor(context: vscode.ExtensionContext, apiUrl: string = "https://jatti-llm-backend-production.up.railway.app") {
     this.context = context;
     this.apiUrl = apiUrl;
   }
